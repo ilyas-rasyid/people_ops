@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model CompanySettings {
+  id                        String   @id @default(uuid())
+  name                      String   @default("Northstar Studio")
+  timezone                  String   @default("Asia/Makassar")
+  defaultAnnualDays         Int      @default(12)
+  version                   Int      @default(1)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+}
+
+model Department {
+  id              String     @id @default(uuid())
+  name            String
+  normalizedName  String
+  status          String     @default("ACTIVE")
+  employees       Employee[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  @@index([normalizedName, status])
+}
+
+model Position {
+  id              String     @id @default(uuid())
+  title           String
+  normalizedTitle String
+  status          String     @default("ACTIVE")
+  employees       Employee[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  @@index([normalizedTitle, status])
+}
+
+model Employee {
+  id                String               @id @default(uuid())
+  employeeCode      String               @unique
+  fullName          String
+  workEmail         String               @unique
+  phoneNumber       String?
+  joinDate          DateTime             @db.Date
+  departmentId      String
+  positionId        String
+  managerId         String?
+  status            String               @default("ACTIVE")
+  deactivatedAt     DateTime?
+  version           Int                  @default(1)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  department        Department           @relation(fields: [departmentId], references: [id])
+  position          Position             @relation(fields: [positionId], references: [id])
+  manager           Employee?            @relation("EmployeeHierarchy", fields: [managerId], references: [id])
+  reports           Employee[]           @relation("EmployeeHierarchy")
+  user              User?
+  history           EmploymentRecord[]
+  attendance        AttendanceRecord[]
+  entitlements      LeaveEntitlement[]
+  requests          LeaveRequest[]
+  @@index([managerId, status])
+  @@index([departmentId, status])
+  @@index([positionId, status])
+}
+
+model EmploymentRecord {
+  id          String   @id @default(uuid())
+  employeeId  String
+  eventType   String
+  before      Json?
+  after       Json?
+  reason      String?
+  actorId     String?
+  createdAt   DateTime @default(now())
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  @@index([employeeId, createdAt])
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  employeeId         String         @unique
+  passwordHash       String
+  role               String         @default("EMPLOYEE")
+  status             String         @default("ACTIVE")
+  mustChangePassword Boolean        @default(false)
+  credentialExpiresAt DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  employee           Employee       @relation(fields: [employeeId], references: [id])
+  sessions           Session[]
+  auditEvents        AuditLog[]
+  approvals          LeaveRequest[] @relation("AssignedApprover")
+}
+
+model Session {
+  id            String    @id @default(uuid())
+  userId        String
+  tokenHash     String    @unique
+  expiresAt     DateTime
+  idleExpiresAt DateTime
+  revokedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  lastSeenAt    DateTime  @default(now())
+  user          User      @relation(fields: [userId], references: [id])
+  @@index([userId, expiresAt])
+}
+
+model WorkSchedule {
+  id             String             @id @default(uuid())
+  effectiveFrom  DateTime           @unique @db.Date
+  effectiveUntil DateTime?          @db.Date
+  workingDays    String             @default("1,2,3,4,5")
+  startTime      String             @default("09:00")
+  endTime        String             @default("17:00")
+  graceMinutes   Int                @default(10)
+  timezone       String             @default("Asia/Makassar")
+  createdAt      DateTime           @default(now())
+  attendance     AttendanceRecord[]
+}
+
+model Holiday {
+  id        String   @id @default(uuid())
+  date      DateTime @unique @db.Date
+  name      String
+  status    String   @default("ACTIVE")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AttendanceRecord {
+  id                   String                 @id @default(uuid())
+  employeeId           String
+  workDate             DateTime               @db.Date
+  clockInAt            DateTime?
+  clockOutAt           DateTime?
+  scheduleId           String?
+  startTimeSnapshot    String?
+  graceMinutesSnapshot Int?
+  source               String                 @default("EMPLOYEE")
+  version              Int                    @default(1)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  employee             Employee               @relation(fields: [employeeId], references: [id])
+  schedule             WorkSchedule?          @relation(fields: [scheduleId], references: [id])
+  adjustments          AttendanceAdjustment[]
+  @@unique([employeeId, workDate])
+  @@index([workDate, employeeId])
+}
+
+model AttendanceAdjustment {
+  id           String           @id @default(uuid())
+  attendanceId String
+  actorId      String
+  before       Json?
+  after        Json
+  reason       String
+  createdAt    DateTime         @default(now())
+  attendance   AttendanceRecord @relation(fields: [attendanceId], references: [id])
+}
+
+model LeaveType {
+  id             String             @id @default(uuid())
+  code           String             @unique
+  name           String
+  deductsBalance Boolean            @default(false)
+  status         String             @default("ACTIVE")
+  requests       LeaveRequest[]
+  entitlements   LeaveEntitlement[]
+}
+
+model LeaveEntitlement {
+  id           String               @id @default(uuid())
+  employeeId   String
+  leaveTypeId  String
+  year         Int
+  createdAt    DateTime             @default(now())
+  employee     Employee             @relation(fields: [employeeId], references: [id])
+  leaveType    LeaveType            @relation(fields: [leaveTypeId], references: [id])
+  reservations LeaveReservation[]
+  ledger       LeaveBalanceLedger[]
+  @@unique([employeeId, leaveTypeId, year])
+}
+
+model LeaveRequest {
+  id             String               @id @default(uuid())
+  employeeId     String
+  leaveTypeId    String
+  startDate      DateTime             @db.Date
+  endDate        DateTime             @db.Date
+  requestedDays  Int
+  note           String?
+  status         String               @default("PENDING")
+  approverId     String
+  decidedById    String?
+  decidedAt      DateTime?
+  decisionReason String?
+  cancelledById  String?
+  cancelledAt    DateTime?
+  cancelReason   String?
+  submittedAt    DateTime             @default(now())
+  version        Int                  @default(1)
+  employee       Employee             @relation(fields: [employeeId], references: [id])
+  leaveType      LeaveType            @relation(fields: [leaveTypeId], references: [id])
+  approver       User                 @relation("AssignedApprover", fields: [approverId], references: [id])
+  days           LeaveRequestDay[]
+  reservation    LeaveReservation?
+  ledger         LeaveBalanceLedger[]
+  @@index([employeeId, submittedAt])
+  @@index([approverId, status, submittedAt])
+  @@index([status, startDate])
+}
+
+model LeaveRequestDay {
+  id        String       @id @default(uuid())
+  requestId String
+  date      DateTime     @db.Date
+  request   LeaveRequest @relation(fields: [requestId], references: [id])
+  @@unique([requestId, date])
+}
+
+model LeaveReservation {
+  id            String           @id @default(uuid())
+  requestId     String           @unique
+  entitlementId String
+  reservedDays  Int
+  status        String           @default("ACTIVE")
+  createdAt     DateTime         @default(now())
+  resolvedAt    DateTime?
+  request       LeaveRequest     @relation(fields: [requestId], references: [id])
+  entitlement   LeaveEntitlement @relation(fields: [entitlementId], references: [id])
+  @@index([entitlementId, status])
+}
+
+model LeaveBalanceLedger {
+  id            String           @id @default(uuid())
+  entitlementId String
+  requestId     String?
+  eventType     String
+  deltaDays     Int
+  eventKey      String           @unique
+  reason        String?
+  actorId       String?
+  createdAt     DateTime         @default(now())
+  entitlement   LeaveEntitlement @relation(fields: [entitlementId], references: [id])
+  request       LeaveRequest?    @relation(fields: [requestId], references: [id])
+  @@index([entitlementId, createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String?
+  actor      User?    @relation(fields: [actorId], references: [id])
+  eventType  String
+  resource   String
+  resourceId String
+  before     Json?
+  after      Json?
+  reason     String?
+  requestId  String
+  createdAt  DateTime @default(now())
+  @@index([createdAt])
+  @@index([resource, resourceId, createdAt])
+}
+
+model IdempotencyRecord {
+  id             String   @id @default(uuid())
+  actorId        String
+  operation      String
+  key            String
+  fingerprint    String
+  resourceId     String?
+  resultStatus   String
+  createdAt      DateTime @default(now())
+  expiresAt      DateTime
+  @@unique([actorId, operation, key])
+  @@index([expiresAt])
+}

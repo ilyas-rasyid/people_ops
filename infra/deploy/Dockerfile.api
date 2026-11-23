@@ -1,0 +1,13 @@
+FROM oven/bun:1 AS builder
+WORKDIR /workspace
+COPY . .
+RUN bun install --frozen-lockfile
+RUN bun run db:generate
+RUN bun run --filter @peopleops/api build
+
+FROM oven/bun:1
+WORKDIR /workspace
+ENV APP_ENV=production
+COPY --from=builder /workspace /workspace
+EXPOSE 3001
+CMD ["bun", "apps/api/dist/index.js"]

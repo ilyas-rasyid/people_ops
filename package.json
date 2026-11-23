@@ -1,0 +1,47 @@
+{
+  "name": "peopleops",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run db:generate && bun run --parallel --filter @peopleops/web --filter @peopleops/api dev",
+    "build": "bun run --filter @peopleops/web build && bun run --filter @peopleops/api build",
+    "check": "bun run typecheck && bun run lint && bun run format:check && bun run audit:files && bun run audit:boundaries",
+    "typecheck": "bun run db:generate && bun run --filter @peopleops/contracts typecheck && bun run --filter @peopleops/api typecheck && bun run --filter @peopleops/web typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "audit:files": "node scripts/audit-file-length.mjs",
+    "audit:boundaries": "node scripts/audit-boundaries.mjs",
+    "test": "vitest run --config vitest.config.ts",
+    "test:structure": "node --test scripts/tests/*.test.mjs",
+    "db:test:guard": "node scripts/assert-test-database.mjs",
+    "db:fixture:deploy": "bun run db:test:guard && bunx --bun prisma migrate deploy --config tests/fixtures/prisma7.config.ts",
+    "db:status": "bunx --bun prisma migrate status --config apps/api/prisma7.config.ts",
+    "db:validate": "bunx --bun prisma validate --config apps/api/prisma7.config.ts",
+    "test:integration": "bun run db:fixture:deploy && vitest run --config vitest.integration.config.ts",
+    "infra:up": "docker compose --env-file .env -f infra/compose/compose.yml up -d --wait",
+    "infra:down": "docker compose --env-file .env -f infra/compose/compose.yml down",
+    "ci": "bun run check && bun run test && bun run test:structure && bun run test:integration && bun run build",
+    "db:generate": "bun run --filter @peopleops/api db:generate",
+    "db:migrate": "bun run --filter @peopleops/api db:migrate",
+    "db:deploy": "bun run --filter @peopleops/api db:deploy",
+    "db:seed": "bun run --filter @peopleops/api db:seed",
+    "db:provision": "bun run --filter @peopleops/api db:provision",
+    "db:constraints": "bun run --filter @peopleops/api db:constraints"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/node": "22.15.30",
+    "eslint": "9.39.1",
+    "prettier": "3.6.2",
+    "prisma": "7.10.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.4",
+    "vitest": "4.0.4"
+  }
+}

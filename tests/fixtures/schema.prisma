@@ -1,0 +1,13 @@
+// Disposable migration rehearsal, never part of the business schema.
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model M0MigrationProbe {
+  id String @id
+}

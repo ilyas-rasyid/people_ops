@@ -64,7 +64,6 @@ when `APP_ENV=production`.
 - `apps/api/src/database`: Prisma Client, synthetic seed, annual provisioning.
 - `apps/api/prisma`: 19-entity schema and PostgreSQL-specific guardrails.
 - `packages/contracts`: portable API response contracts.
-- `.github/workflows`: CI foundation.
 - `infra/compose`: local PostgreSQL.
 - `infra/deploy`: reference container deployment configuration.
 

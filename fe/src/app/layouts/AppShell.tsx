@@ -95,6 +95,12 @@ export function AppShell() {
   const title =
     [...links.flatMap((group) => group.items)].find((item) => location.pathname === item.path)
       ?.label ?? "PeopleOps";
+  const currentGroup = links.find((group) =>
+    group.items.some((item) => item.path === location.pathname),
+  );
+  const currentSection = currentGroup
+    ? currentGroup.title.charAt(0) + currentGroup.title.slice(1).toLowerCase()
+    : "Workspace";
   return (
     <div className={`workspace ${collapsed ? "workspace-collapsed" : ""}`}>
       {mobileOpen && (
@@ -190,7 +196,7 @@ export function AppShell() {
             >
               <Menu size={21} />
             </button>
-            <span className="topbar-section">Workspace</span>
+            <span className="topbar-section">{currentSection}</span>
             <span className="breadcrumb-slash">/</span>
             <strong>{title}</strong>
           </div>

@@ -39,9 +39,6 @@
   flex: 1;
 }
 .workspace-topbar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
   height: 64px;
   display: flex;
   justify-content: space-between;

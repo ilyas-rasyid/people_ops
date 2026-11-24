@@ -88,9 +88,35 @@
 }
 .sidebar-nav {
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
   flex: 1;
   padding: 0 11px 15px;
   scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-faint) transparent;
+  transition: scrollbar-color 0.2s ease;
+}
+.sidebar:hover .sidebar-nav,
+.sidebar-nav:hover {
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+.sidebar-nav::-webkit-scrollbar {
+  width: 5px;
+}
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-faint);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+.sidebar:hover .sidebar-nav::-webkit-scrollbar-thumb,
+.sidebar-nav:hover::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+}
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
 }
 .nav-group {
   margin-bottom: 24px;

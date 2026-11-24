@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./shell-navigation.css";
+@import "./shell-content.css";
+@import "./components-foundation.css";
+@import "./components-data.css";
+@import "./components-feedback.css";
+@import "./pages-dashboard.css";
+@import "./pages-employee.css";
+@import "./pages-attendance-leave.css";
+@import "./pages-responsive.css";
+@import "./pages-utilities.css";
+@import "./login.css";

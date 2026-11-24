@@ -1,0 +1,99 @@
+import { route } from "../../../commons/routing/router";
+import { listEmployees, getEmployeeDetail, getEmployeeHistory } from "../service/employee-read.service";
+import { createEmployeeEndpoint, updateEmployeeEndpoint } from "../service/employee-write.service";
+import { deactivateEmployee, reactivateEmployee } from "../service/employee-lifecycle.service";
+import { createAccount, changeAccountRole, manageAccount } from "../service/employee-account.service";
+import { getMyProfile, updateMyContact } from "../service/employee-profile.service";
+import { listMyTeam, getTeamMember } from "../service/employee-team.service";
+
+export const employeeRoutes = [
+  route(
+    "GET",
+    "/api/v1/employees",
+    "HR",
+    listEmployees,
+  ),
+  route(
+    "POST",
+    "/api/v1/employees",
+    "HR",
+    createEmployeeEndpoint,
+    true,
+  ),
+  route(
+    "GET",
+    "/api/v1/employees/:id",
+    "HR",
+    getEmployeeDetail,
+  ),
+  route(
+    "PATCH",
+    "/api/v1/employees/:id",
+    "HR",
+    updateEmployeeEndpoint,
+  ),
+  route(
+    "GET",
+    "/api/v1/employees/:id/employment-history",
+    "HR",
+    getEmployeeHistory,
+  ),
+  route(
+    "POST",
+    "/api/v1/employees/:id/deactivate",
+    "HR",
+    deactivateEmployee,
+    true,
+  ),
+  route(
+    "POST",
+    "/api/v1/employees/:id/activate",
+    "HR",
+    reactivateEmployee,
+    true,
+  ),
+  route(
+    "POST",
+    "/api/v1/employees/:id/account",
+    "HR",
+    createAccount,
+    true,
+  ),
+  route(
+    "PATCH",
+    "/api/v1/employees/:id/account/role",
+    "HR",
+    changeAccountRole,
+  ),
+  route(
+    "POST",
+    "/api/v1/employees/:id/account/:action",
+    "HR",
+    manageAccount,
+    true,
+  ),
+  route(
+    "GET",
+    "/api/v1/me/profile",
+    "AUTH",
+    getMyProfile,
+  ),
+  route(
+    "PATCH",
+    "/api/v1/me/profile/contact",
+    "AUTH",
+    updateMyContact,
+  ),
+  route(
+    "GET",
+    "/api/v1/team",
+    "MANAGER",
+    listMyTeam,
+  ),
+  route(
+    "GET",
+    "/api/v1/team/:id",
+    "MANAGER",
+    getTeamMember,
+  )
+];

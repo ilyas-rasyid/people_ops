@@ -1,4 +1,4 @@
-export type ApiMeta = { requestId: string };
+export type ApiMeta = { requestId: string; };
 
 export type ApiErrorCode =
   | "INVALID_INPUT"
@@ -17,4 +17,4 @@ export type ApiSuccess<T> = {
   meta: ApiMeta;
 };
 
-export type ApiFailure = { error: ApiError };
+export type ApiFailure = { error: ApiError; };

@@ -2,9 +2,9 @@ FROM oven/bun:1 AS builder
 WORKDIR /workspace
 COPY . .
 RUN bun install --frozen-lockfile
-RUN bun run --filter @peopleops/web build
+RUN bun run --filter @peopleops/fe build
 
 FROM caddy:2-alpine
 COPY infra/deploy/Caddyfile /etc/caddy/Caddyfile
-COPY --from=builder /workspace/apps/web/dist /srv
+COPY --from=builder /workspace/fe/dist /srv
 EXPOSE 80 443

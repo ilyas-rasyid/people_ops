@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { extname, join, relative } from "node:path";
 
 const excluded = new Set(["node_modules", "dist", "coverage", "generated", ".git"]);
-const extensions = new Set([".ts", ".tsx", ".js", ".mjs"]);
+const extensions = new Set([".ts", ".tsx", ".js", ".mjs", ".css"]);
 
 export function auditFileLength(root, maxLines = 350) {
   const violations = [];

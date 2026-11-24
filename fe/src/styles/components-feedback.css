@@ -1,0 +1,106 @@
+/* components feedback — PeopleOps UI */
+.empty-state strong {
+  margin-top: 8px;
+  color: #394960;
+  font-size: 13px;
+}
+.empty-state p {
+  font-size: 12px;
+  margin: 0;
+  color: #94a3b8;
+}
+.error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #ad2934;
+  background: #fff4f4;
+  border: 1px solid #f9d9dc;
+  border-radius: 7px;
+  font-size: 12px;
+  padding: 12px;
+  margin: 10px 0;
+  line-height: 1.55;
+}
+.success-message {
+  color: #167544;
+  background: #effcf3;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #111d35a0;
+}
+.modal {
+  background: white;
+  width: min(100%, 500px);
+  border-radius: 12px;
+  box-shadow: 0 18px 70px #07102025;
+  overflow: hidden;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-header {
+  padding: 20px 23px;
+  border-bottom: 1px solid #edf0f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header h2 {
+  font-size: 16px;
+  margin: 0;
+}
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  padding: 22px 23px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #475569;
+}
+.modal-body p {
+  margin: 0;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 17px 23px;
+  gap: 10px;
+  border-top: 1px solid #edf0f5;
+}
+@media (max-width: 640px) {
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 24px;
+  }
+  .table-toolbar {
+    padding: 14px;
+  }
+  .search-box {
+    flex: 1;
+  }
+  .filter-select {
+    flex: 1;
+    width: 100%;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .panel-pad {
+    padding: 18px;
+  }
+  .modal-footer {
+    flex-wrap: wrap;
+  }
+}

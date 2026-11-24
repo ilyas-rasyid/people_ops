@@ -7,6 +7,7 @@
       "devDependencies": {
         "@eslint/js": "9.39.1",
         "@types/node": "22.15.30",
+        "dotenv": "17.4.2",
         "eslint": "9.39.1",
         "prettier": "3.6.2",
         "prisma": "7.10.0",
@@ -15,8 +16,8 @@
         "vitest": "4.0.4",
       },
     },
-    "apps/api": {
-      "name": "@peopleops/api",
+    "be": {
+      "name": "@peopleops/be",
       "version": "0.0.0",
       "dependencies": {
         "@peopleops/contracts": "workspace:*",
@@ -32,8 +33,8 @@
         "@types/pg": "8.23.1",
       },
     },
-    "apps/web": {
-      "name": "@peopleops/web",
+    "fe": {
+      "name": "@peopleops/fe",
       "version": "0.0.0",
       "dependencies": {
         "@peopleops/contracts": "workspace:*",
@@ -174,11 +175,11 @@
 
     "@oxc-project/types": ["@oxc-project/types@0.156.0", "", {}, "sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw=="],
 
-    "@peopleops/api": ["@peopleops/api@workspace:apps/api"],
+    "@peopleops/be": ["@peopleops/be@workspace:be"],
 
     "@peopleops/contracts": ["@peopleops/contracts@workspace:packages/contracts"],
 
-    "@peopleops/web": ["@peopleops/web@workspace:apps/web"],
+    "@peopleops/fe": ["@peopleops/fe@workspace:fe"],
 
     "@prisma/adapter-pg": ["@prisma/adapter-pg@7.10.0", "", { "dependencies": { "@prisma/driver-adapter-utils": "7.10.0", "@types/pg": "^8.16.0", "pg": "^8.16.3", "postgres-array": "3.0.4" } }, "sha512-N7nwSor0HO1Kz6xBv0TPAjAPysKK0fac6p4fVN3ensLOuzc/83Fgmln5k92eK/cvzqdkSR/2kkAqlbcdwVrwpw=="],
 

@@ -7,11 +7,11 @@ const excluded = new Set(["node_modules", "generated", "dist", "coverage", ".git
 const extensions = new Set([".ts", ".tsx", ".js", ".mjs"]);
 
 const checks = [
-  { prefix: "apps/web/", patterns: [/apps\/api\//, /@prisma\//, /from\s+["']pg["']/] },
-  { prefix: "apps/api/", patterns: [/apps\/web\//, /from\s+["']react["']/] },
+  { prefix: "fe/", patterns: [/be\//, /@prisma\//, /from\s+["']pg["']/] },
+  { prefix: "be/", patterns: [/fe\//, /from\s+["']react["']/] },
   {
     prefix: "packages/contracts/",
-    patterns: [/apps\/(web|api)\//, /@prisma\//, /from\s+["'](pg|elysia|react)["']/],
+    patterns: [/apps\/(web|api|fe|be)\//, /@prisma\//, /from\s+["'](pg|elysia|react)["']/],
   },
 ];
 
@@ -37,7 +37,8 @@ function walk(directory) {
   }
 }
 
-walk(join(root, "apps"));
+walk(join(root, "be"));
+walk(join(root, "fe"));
 walk(join(root, "packages"));
 
 if (failures.length > 0) {

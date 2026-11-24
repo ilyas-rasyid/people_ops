@@ -1,0 +1,174 @@
+/* components data — PeopleOps UI */
+.data-table td strong {
+  font-weight: 650;
+  color: #22304a;
+}
+.data-table .th-actions {
+  text-align: right;
+}
+.person-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.person-cell strong,
+.person-cell small {
+  display: block;
+}
+.person-cell small {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 3px;
+}
+.avatar-soft {
+  background: #e8edf9;
+  color: #435a86;
+  width: 32px;
+  height: 32px;
+}
+.avatar-subtle {
+  background: #f1f5f9;
+}
+.mono-value {
+  font-variant-numeric: tabular-nums;
+  color: #6d7b91 !important;
+}
+.block-muted {
+  display: block;
+  margin-top: 4px;
+  color: #8d9bb0;
+  font-size: 11px;
+}
+.table-action {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #8da0b9;
+}
+.table-action:hover {
+  color: #2563eb;
+  background: #eff6ff;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 10px;
+  font-weight: 690;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.badge-success {
+  color: #167544;
+  background: #eafaef;
+}
+.badge-warning {
+  color: #9a620b;
+  background: #fff6df;
+}
+.badge-danger {
+  color: #b42331;
+  background: #fff0f0;
+}
+.badge-info {
+  color: #255bc2;
+  background: #edf4ff;
+}
+.badge-neutral {
+  color: #64748b;
+  background: #f1f5f9;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 19px;
+  border-top: 1px solid #edf0f5;
+  color: #8593a8;
+  font-size: 11px;
+}
+.pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.pagination .icon-btn {
+  padding: 5px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+}
+.field-label {
+  color: #394a65;
+  font-size: 12px;
+  font-weight: 660;
+}
+.field-hint {
+  font-size: 11px;
+  color: #8793a6;
+}
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 19px;
+}
+.form-section-title {
+  margin: 0 0 19px;
+  color: #192841;
+  font-size: 15px;
+  font-weight: 710;
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+.checkbox-line {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+}
+.checkbox-line input {
+  accent-color: #2563eb;
+}
+.state-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 50px 20px;
+  color: #718097;
+  font-size: 13px;
+}
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 56px 20px;
+  color: #98a6b8;
+}

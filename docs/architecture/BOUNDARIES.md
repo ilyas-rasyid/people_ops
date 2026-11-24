@@ -5,12 +5,12 @@ references. It does **not** copy their tenancy, school modules, tokens, or domai
 
 ## Frontend
 
-Future `apps/web/src/features/<feature>/` folders own pages, components, hooks,
+Future `fe/src/features/<feature>/` folders own pages, components, hooks,
 services, schemas, types and constants as needed. Do not create empty directories.
 
 ## Backend
 
-Future `apps/api/src/features/<feature>/` folders separate:
+Future `be/src/features/<feature>/` folders separate:
 
 - `handler`: transport routing, request/response handling.
 - `service`: business operations and transactions.

@@ -1,0 +1,113 @@
+/* pages responsive — PeopleOps UI */
+.settings-layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 22px;
+}
+.settings-tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.settings-link {
+  padding: 12px 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  color: #718097;
+}
+.settings-link:hover,
+.settings-link.active {
+  color: #1d4ed8;
+  background: #eff5ff;
+  font-weight: 660;
+}
+.security-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 18px 20px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+.security-link span {
+  margin-left: auto;
+}
+.full-page-loader {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+.standalone-password {
+  max-width: 700px;
+  margin: 90px auto;
+  padding: 20px;
+}
+@media (max-width: 1100px) {
+  .dashboard-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .metric-cell:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid #eef1f6;
+  }
+  .metric-cell:nth-child(4) {
+    border-top: 1px solid #eef1f6;
+  }
+  .dashboard-columns {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .attendance-top-grid,
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+  .settings-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .balance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .balance-item:nth-child(2) {
+    border-right: 0;
+  }
+  .balance-item:nth-child(1),
+  .balance-item:nth-child(2) {
+    border-bottom: 1px solid #edf0f5;
+  }
+}
+@media (max-width: 480px) {
+  .dashboard-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .metric-cell {
+    padding: 17px;
+  }
+  .metric-main strong {
+    font-size: 24px;
+  }
+  .detail-grid {
+    grid-template-columns: 1fr;
+    padding: 19px;
+    gap: 18px;
+  }
+  .employee-hero {
+    align-items: flex-start;
+    padding: 18px;
+  }
+  .avatar-large {
+    width: 52px;
+    height: 52px;
+    font-size: 16px;
+  }
+  .tabs {
+    gap: 19px;
+  }
+  .metric-main {
+    margin-top: 14px;
+  }
+}

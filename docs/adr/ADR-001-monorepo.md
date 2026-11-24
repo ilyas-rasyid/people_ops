@@ -4,7 +4,7 @@
 
 ## Decision
 
-Use a Bun workspace with three code packages: `apps/web`, `apps/api`,
+Use a Bun workspace with three code packages: `fe`, `be`,
 and `packages/contracts`.
 
 ## Rationale
